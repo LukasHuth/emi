@@ -24,6 +24,7 @@ public class MaterialNode {
 	public FoldState state = FoldState.EXPANDED;
 	public ProgressState progress = ProgressState.UNSTARTED;
 	public long neededBatches = 0, totalNeeded = 0;
+	public boolean is_available = false;
 
 	public MaterialNode(EmiIngredient ingredient) {
 		this.amount = ingredient.getAmount();

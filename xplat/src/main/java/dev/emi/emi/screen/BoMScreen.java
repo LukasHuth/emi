@@ -395,6 +395,12 @@ public class BoMScreen extends Screen {
 		} else if (EmiInput.isControlDown() && keyCode == GLFW.GLFW_KEY_C) {
 			BoM.tree = null;
 			init();
+		} else if (hover != null && EmiInput.isControlDown() && keyCode == GLFW.GLFW_KEY_A) {
+			hover.node.is_available = !hover.node.is_available;
+			hover.node.state = FoldState.COLLAPSED;
+			recalculateTree();
+			init();
+			return true;
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
@@ -740,6 +746,11 @@ public class BoMScreen extends Screen {
 				} else if (node.progress == ProgressState.PARTIAL) {
 					context.setColor(0.8f, 0.2f, 0.9f, 1f);
 				}
+			}
+			// always show what resources are marked to be assumed to be available
+			if (node.progress == ProgressState.ASSUMED_COMPLETION) {
+				// rgb 15, 117, 140
+				context.setColor(0.05f, 0.46f, 0.55f, 1f);
 			}
 			if (hovered) {
 				context.setColor(0.5f, 0.6f, 1f, 1f);

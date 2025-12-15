@@ -153,8 +153,22 @@ public class TreeCost {
 			}
 		}
 	}
+	private void assumed_complete(MaterialNode node) {
+		node.progress = ProgressState.ASSUMED_COMPLETION;
+		node.totalNeeded = 0;
+		node.neededBatches = 0;
+		if (node.children != null) {
+			for (MaterialNode child : node.children) {
+				assumed_complete(child);
+			}
+		}
+	}
 
 	private void calculateCost(MaterialNode node, long amount, ChanceState chance, boolean trackProgress) {
+		if (node.is_available) {
+			assumed_complete(node);
+			return;
+		}
 		if (trackProgress) {
 			node.progress = ProgressState.UNSTARTED;
 			node.totalNeeded = 0;
